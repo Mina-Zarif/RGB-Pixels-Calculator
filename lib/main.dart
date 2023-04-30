@@ -4,6 +4,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:ui' as ui;
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -23,16 +24,14 @@ class _MyAppState extends State<MyApp> {
   List<Rect> rects = [];
   bool isLoading = false;
   List<int> rgbValues = [];
-  List<int> red = [],
-      green = [],
-      blue = [];
+  List<int> red = [], green = [], blue = [];
 
   void _getFromGallery() async {
     setState(() {
       isLoading = true;
     });
     final pickedFile =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
       _image = null;
       image = null;
@@ -109,59 +108,59 @@ class _MyAppState extends State<MyApp> {
           child: _image == null
               ? const Text('No image selected')
               : Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // Image.file(_image!, width: 300, height: 300),
-              (image == null)
-                  ? const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 150),
-                  child: CircularProgressIndicator())
-                  : FittedBox(
-                child: SizedBox(
-                  height: image!.height.toDouble(),
-                  width: image!.width.toDouble(),
-                  child: CustomPaint(
-                    painter: Painter(rects: rects, image: image!),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              (_rgbValues != null)
-                  ? Expanded(
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) =>
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Red:  ${red[index].toString()}",
-                            style: const TextStyle(color: Colors.red),
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // Image.file(_image!, width: 300, height: 300),
+                    (image == null)
+                        ? const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 150),
+                            child: CircularProgressIndicator())
+                        : FittedBox(
+                            child: SizedBox(
+                              height: image!.height.toDouble(),
+                              width: image!.width.toDouble(),
+                              child: CustomPaint(
+                                painter: Painter(rects: rects, image: image!),
+                              ),
+                            ),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "Green: ${green[index].toString()}",
-                            style: const TextStyle(color: Colors.green),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "Blue: ${blue[index].toString()}",
-                            style: const TextStyle(color: Colors.blue),
+                    const SizedBox(height: 20),
+                    (_rgbValues != null)
+                        ? Expanded(
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 40.0, vertical: 3),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Red:  ${red[index].toString()}",
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                    Text(
+                                      "Green: ${green[index].toString()}",
+                                      style:
+                                          const TextStyle(color: Colors.green),
+                                    ),
+                                    Text(
+                                      "Blue: ${blue[index].toString()}",
+                                      style:
+                                          const TextStyle(color: Colors.blue),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const Divider(),
+                              itemCount: _faces.length,
+                            ),
                           )
-                        ],
-                      ),
-                  separatorBuilder: (context, index) =>
-                  const Divider(),
-                  itemCount: _faces.length,
+                        : const Center(child: CircularProgressIndicator()),
+                  ],
                 ),
-              )
-                  : const Center(child: CircularProgressIndicator()),
-            ],
-          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _getFromGallery(),
