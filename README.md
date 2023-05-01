@@ -1,4 +1,4 @@
-# light_switch
+# RGB Pixels Calculator
 
 A new Flutter project.
 
